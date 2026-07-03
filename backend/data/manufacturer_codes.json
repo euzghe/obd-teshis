@@ -1,0 +1,3 @@
+{
+  "_comment": "Üretici-özel (P1xxx vb.) DTC kodları için yerel eşleştirme veritabanı. İleride doldurulacak. Format: { \"MARKA\": { \"P1234\": \"Açıklama\" } }"
+}

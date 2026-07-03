@@ -1,0 +1,466 @@
+/* ---------- Layout ---------- */
+
+.app {
+  min-height: 100svh;
+  display: flex;
+  flex-direction: column;
+}
+
+.app-header {
+  position: sticky;
+  top: 0;
+  z-index: 10;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 1rem;
+  padding: 0.9rem 1.5rem;
+  background: var(--bg-panel);
+  border-bottom: 1px solid var(--border-subtle);
+}
+
+.app-title {
+  font-size: 1.05rem;
+  letter-spacing: 0.06em;
+  text-transform: uppercase;
+  color: var(--text-secondary);
+}
+
+.app-main {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  gap: 2rem;
+  padding: 1.5rem;
+  max-width: 1100px;
+  width: 100%;
+  margin: 0 auto;
+}
+
+.section-title {
+  font-size: 1.1rem;
+  letter-spacing: 0.04em;
+  text-transform: uppercase;
+  color: var(--text-secondary);
+  margin-bottom: 0.9rem;
+}
+
+.section-error {
+  color: var(--status-critical);
+  font-size: 0.9rem;
+  margin-bottom: 0.75rem;
+}
+
+/* ---------- Status badge ---------- */
+
+.status-badge {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.5rem;
+  padding: 0.35rem 0.8rem;
+  border-radius: 999px;
+  font-size: 0.85rem;
+  font-weight: 600;
+  background: var(--bg-panel-raised);
+  border: 1px solid var(--border-subtle);
+  white-space: nowrap;
+}
+
+.status-dot {
+  width: 0.55rem;
+  height: 0.55rem;
+  border-radius: 50%;
+  background: currentColor;
+}
+
+.status-ok {
+  color: var(--status-ok);
+}
+.status-ok .status-dot {
+  box-shadow: 0 0 6px 1px var(--status-ok);
+}
+
+.status-warn {
+  color: var(--status-warn);
+}
+
+.status-neutral {
+  color: var(--text-dim);
+}
+
+.status-critical {
+  color: var(--status-critical);
+}
+.status-critical .status-dot {
+  box-shadow: 0 0 6px 1px var(--status-critical);
+}
+
+/* ---------- Gauges ---------- */
+
+.gauge-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+  gap: 1rem;
+}
+
+.gauge-card {
+  position: relative;
+  background: radial-gradient(ellipse at 50% 30%, var(--bg-panel-raised) 0%, var(--bg-panel) 70%);
+  border: 1px solid var(--border-subtle);
+  border-radius: 12px;
+  padding: 1.1rem 1rem 1.3rem;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 0.2rem;
+}
+
+.gauge-label {
+  font-size: 0.78rem;
+  letter-spacing: 0.05em;
+  text-transform: uppercase;
+  color: var(--text-secondary);
+  align-self: flex-start;
+}
+
+/* Renk tek başına anlam taşımasın diye: tehlike/uyarı bölgesinde metin+ikon rozeti */
+.gauge-status-badge {
+  position: absolute;
+  top: 0.7rem;
+  right: 0.7rem;
+  display: inline-flex;
+  align-items: center;
+  gap: 0.25rem;
+  font-size: 0.68rem;
+  font-weight: 700;
+  letter-spacing: 0.03em;
+  text-transform: uppercase;
+  padding: 0.15rem 0.5rem;
+  border-radius: 999px;
+}
+
+.gauge-status-badge.zone-warn {
+  color: var(--status-warn);
+  background: color-mix(in srgb, var(--status-warn) 18%, transparent);
+}
+
+.gauge-status-badge.zone-danger {
+  color: var(--status-critical);
+  background: color-mix(in srgb, var(--status-critical) 20%, transparent);
+}
+
+.gauge-svg {
+  width: 100%;
+  max-width: 190px;
+  margin-top: -0.3rem;
+}
+
+.gauge-track {
+  stroke: var(--border-subtle);
+  stroke-linecap: round;
+}
+
+.gauge-zone {
+  stroke-linecap: butt;
+  opacity: 0.9;
+}
+
+.zone-warn {
+  stroke: var(--status-warn);
+}
+
+.zone-danger {
+  stroke: var(--status-critical);
+}
+
+.gauge-tick {
+  stroke: var(--text-dim);
+  stroke-width: 2;
+}
+
+.gauge-tick-label {
+  fill: var(--text-dim);
+  font-family: var(--font-mono);
+  font-size: 11px;
+}
+
+.gauge-needle-group {
+  transition: transform 0.4s ease;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .gauge-needle-group {
+    transition: none;
+  }
+}
+
+.gauge-needle {
+  stroke: var(--text-primary);
+  stroke-width: 4;
+  stroke-linecap: round;
+  filter: drop-shadow(0 0 3px rgba(0, 0, 0, 0.6));
+}
+
+.gauge-pivot {
+  fill: var(--text-primary);
+  stroke: var(--bg-panel);
+  stroke-width: 2;
+}
+
+.gauge-value {
+  display: flex;
+  align-items: baseline;
+  gap: 0.35rem;
+  font-family: var(--font-mono);
+  font-variant-numeric: tabular-nums;
+  margin-top: -1.4rem;
+}
+
+.gauge-number {
+  font-size: 1.9rem;
+  font-weight: 600;
+  color: var(--text-primary);
+  transition: color 0.3s ease;
+}
+
+.gauge-unit {
+  font-size: 0.8rem;
+  color: var(--text-dim);
+}
+
+.gauge-secondary {
+  font-size: 0.76rem;
+  color: var(--text-secondary);
+  font-family: var(--font-mono);
+}
+
+/* ---------- DTC list ---------- */
+
+.dtc-list-empty {
+  color: var(--text-secondary);
+  font-size: 0.9rem;
+}
+
+.dtc-cards {
+  display: flex;
+  flex-direction: column;
+  gap: 0.75rem;
+}
+
+.dtc-card {
+  background: var(--bg-panel);
+  border: 1px solid var(--border-subtle);
+  border-left: 4px solid var(--border-strong);
+  border-radius: 8px;
+  overflow: hidden;
+}
+
+.dtc-card[open] {
+  border-color: var(--border-strong);
+}
+
+.dtc-card-summary {
+  list-style: none;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  gap: 0.9rem;
+  padding: 0.9rem 1.1rem;
+  min-height: 44px; /* WCAG 2.5.5 dokunma hedefi — satırın tamamı tıklanabilir, sadece ok değil */
+  user-select: none;
+}
+
+.dtc-card-summary::-webkit-details-marker {
+  display: none;
+}
+
+.dtc-card-summary::before {
+  content: '▶';
+  font-size: 0.7rem;
+  color: var(--text-dim);
+  transition: transform 0.2s ease;
+  flex-shrink: 0;
+}
+
+.dtc-card[open] > .dtc-card-summary::before {
+  transform: rotate(90deg);
+}
+
+.dtc-code {
+  font-family: var(--font-mono);
+  font-weight: 700;
+  color: var(--text-primary);
+  font-size: 0.95rem;
+  flex-shrink: 0;
+}
+
+.dtc-title-group {
+  display: flex;
+  flex-direction: column;
+  gap: 0.1rem;
+  flex: 1;
+  overflow: hidden;
+  min-width: 0;
+}
+
+.dtc-title {
+  color: var(--text-secondary);
+  font-size: 0.9rem;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+.dtc-title-secondary {
+  color: var(--text-dim);
+  font-size: 0.76rem;
+  font-style: italic;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+.urgency-badge {
+  font-size: 0.72rem;
+  font-weight: 700;
+  letter-spacing: 0.03em;
+  text-transform: uppercase;
+  padding: 0.2rem 0.55rem;
+  border-radius: 999px;
+  flex-shrink: 0;
+}
+
+.urgency-badge--low {
+  color: var(--status-neutral);
+  background: color-mix(in srgb, var(--status-neutral) 18%, transparent);
+}
+.urgency-badge--medium {
+  color: var(--status-warn);
+  background: color-mix(in srgb, var(--status-warn) 18%, transparent);
+}
+.urgency-badge--high {
+  color: var(--status-high);
+  background: color-mix(in srgb, var(--status-high) 18%, transparent);
+}
+.urgency-badge--critical {
+  color: var(--status-critical);
+  background: color-mix(in srgb, var(--status-critical) 20%, transparent);
+}
+
+/* Kart kenarlığı her zaman aciliyet rengini taşır (fonksiyonel işaret).
+   Tüm kart arka planı sadece en yüksek seviyede ("acil") kırmızıya döner —
+   gerçek bir aracın ana uyarı ışığı gibi, sadece kritik durumda dikkat çeker. */
+.dtc-card--low {
+  border-left-color: var(--status-neutral);
+}
+.dtc-card--medium {
+  border-left-color: var(--status-warn);
+}
+.dtc-card--high {
+  border-left-color: var(--status-high);
+}
+.dtc-card--critical {
+  border-left-color: var(--status-critical);
+  animation: critical-pulse 2.2s ease-in-out infinite;
+}
+
+@keyframes critical-pulse {
+  0%,
+  100% {
+    box-shadow: inset 0 0 0 0 color-mix(in srgb, var(--status-critical) 0%, transparent);
+  }
+  50% {
+    box-shadow: inset 3px 0 8px -2px color-mix(in srgb, var(--status-critical) 45%, transparent);
+  }
+}
+
+.dtc-card-body {
+  padding: 0 1.1rem 1.1rem 2.5rem;
+  display: flex;
+  flex-direction: column;
+  gap: 0.9rem;
+}
+
+.dtc-explanation {
+  color: var(--text-primary);
+  font-size: 0.92rem;
+  line-height: 1.5;
+}
+
+.dtc-section h4 {
+  font-size: 0.78rem;
+  letter-spacing: 0.05em;
+  text-transform: uppercase;
+  color: var(--text-secondary);
+  margin-bottom: 0.4rem;
+}
+
+.dtc-section ul {
+  color: var(--text-primary);
+  font-size: 0.88rem;
+  display: flex;
+  flex-direction: column;
+  gap: 0.2rem;
+}
+
+.dtc-cost p {
+  font-family: var(--font-mono);
+  font-size: 0.88rem;
+  color: var(--text-primary);
+}
+
+.dtc-cost-note {
+  font-family: var(--font-sans) !important;
+  color: var(--text-dim) !important;
+  font-size: 0.8rem !important;
+  font-style: italic;
+  margin-top: 0.2rem;
+}
+
+.dtc-kod-tipi {
+  font-size: 0.82rem;
+  color: var(--text-secondary);
+}
+
+.dtc-guven-notu {
+  font-size: 0.85rem;
+  color: var(--status-warn);
+  background: color-mix(in srgb, var(--status-warn) 10%, transparent);
+  border: 1px solid color-mix(in srgb, var(--status-warn) 30%, transparent);
+  border-radius: 6px;
+  padding: 0.6rem 0.75rem;
+}
+
+.dtc-card-error {
+  color: var(--status-critical);
+  font-size: 0.88rem;
+}
+
+/* ---------- Skeleton / loading ---------- */
+
+.dtc-skeleton {
+  display: flex;
+  flex-direction: column;
+  gap: 0.5rem;
+}
+
+.skeleton-line {
+  height: 0.8rem;
+  border-radius: 4px;
+  background: var(--border-subtle);
+  animation: skeleton-pulse 1.4s ease-in-out infinite;
+}
+
+.skeleton-line-short {
+  width: 60%;
+}
+
+@keyframes skeleton-pulse {
+  0%,
+  100% {
+    opacity: 0.5;
+  }
+  50% {
+    opacity: 1;
+  }
+}
